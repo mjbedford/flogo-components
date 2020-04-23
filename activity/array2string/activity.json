@@ -1,7 +1,7 @@
 {
   "name": "array2string",
   "type": "flogo:activity",
-  "ref": "https://github.com/mjbedford/mb-flogo-components/activity/array2string",
+  "ref": "github.com/mjbedford/mb-flogo-components/activity/array2string",
   "version": "0.0.1",
   "title": "Array2String",
   "description": "Combines array elements into a single string",
