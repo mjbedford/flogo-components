@@ -1,167 +1,350 @@
 package array2string
 
 import (
-	"strings"
-
-	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	"github.com/TIBCOSoftware/flogo-lib/logger"
+	"github.com/project-flogo/core/activity"
+	"github.com/project-flogo/core/data/metadata"
 )
+
+func init() {
+	_ = activity.Register(&Activity{}, New)
+}
 
 const (
-	delimiter = "delimiter"
-	source    = "source"
-	prefix    = "prefix"
-	suffix    = "suffix"
-	part1     = "part1"
-	part2     = "part2"
-	part3     = "part3"
-	part4     = "part4"
-	part5     = "part5"
-	part6     = "part6"
-	part7     = "part7"
-	part8     = "part8"
-	result    = "result"
+	methodPOST  = "POST"
+	methodPUT   = "PUT"
+	methodPATCH = "PATCH"
 )
 
-// log is the default package logger
-var log = logger.GetLogger("activity-jvanderl-combine")
+var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
-// MyActivity is a stub for your Activity implementation
-type MyActivity struct {
-	metadata *activity.Metadata
-}
-
-// NewActivity creates a new AppActivity
-func NewActivity(metadata *activity.Metadata) activity.Activity {
-	return &MyActivity{metadata: metadata}
-}
-
-// Metadata implements activity.Activity.Metadata
-func (a *MyActivity) Metadata() *activity.Metadata {
-	return a.metadata
-}
-
-// Eval implements activity.Activity.Eval
-func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
-
-	// do eval
-	ivDelimiter := getInputParameter(context, delimiter)
-	source := getInputArray(context, source)
-	ivPrefix := getInputParameter(context, prefix)
-	ivSuffix := getInputParameter(context, suffix)
-	ivPart1 := getInputParameter(context, part1)
-	ivPart2 := getInputParameter(context, part2)
-	ivPart3 := getInputParameter(context, part3)
-	ivPart4 := getInputParameter(context, part4)
-	ivPart5 := getInputParameter(context, part5)
-	ivPart6 := getInputParameter(context, part6)
-	ivPart7 := getInputParameter(context, part7)
-	ivPart8 := getInputParameter(context, part8)
-	/*	log.Debugf("delimiter: [%s]", ivDelimiter)
-		log.Debugf("prefix: [%s]", ivPrefix)
-		log.Debugf("suffix: [%s]", ivSuffix)
-		log.Debugf("part1: [%s]", ivPart1)
-		log.Debugf("part2: [%s]", ivPart2)
-		log.Debugf("part3: [%s]", ivPart3)
-		log.Debugf("part4: [%s]", ivPart4)
-		log.Debugf("part5: [%s]", ivPart5)
-		log.Debugf("part6: [%s]", ivPart6)
-		log.Debugf("part7: [%s]", ivPart7)
-		log.Debugf("part8: [%s]", ivPart8)
-
-			{
-			"name": "source",
-			"type": "array",
-			"value": "{\"$schema\": \"http:\/\/json-schema.org\/draft-04\/schema#\", \"type\": \"object\",\"properties\":  {     \"ids\": { \"type\": \"array\", \"items\": { \"properties\": { \"id\": { \"type\": \"string\" } },    \"required\": [\"id\" ]}}}}"
-
-
-		}
-		,
-	*/
-	var ivResult = ""
-
-	log.Debug("Adding parts to result")
-	if source != nil {
-		// for _, i := range source.ids {
-		// 	ivResult = addPart(ivResult, i.id, ivDelimiter)
-		log.Debug("we have a source")
-		// }
+func New(ctx activity.InitContext) (activity.Activity, error) {
+	s := &Settings{}
+	err := metadata.MapToStruct(ctx.Settings(), s, true)
+	if err != nil {
+		return nil, err
 	}
 
-	ivResult = addPart(ivResult, ivPart1, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart2, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart3, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart4, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart5, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart6, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart7, ivDelimiter)
-	ivResult = addPart(ivResult, ivPart8, ivDelimiter)
+	act := &Activity{settings: s}
+	// act.containsParam = strings.Index(s.Uri, "/:") > -1
 
-	log.Debugf("Result is now: [%s]", ivResult)
+	// client := &http.Client{}
 
-	//	log.Debug("Processing prefix")
-	if ivPrefix != "" { // we have a prefix, result starts with this
-		if ivDelimiter != "" { // add delimiter at start if present
-			ivResult = ivDelimiter + ivResult
-		}
-		ivResult = ivPrefix + ivResult
-	} else { // we don't have a prefix, delete delimiter if present
-		if ivDelimiter != "" {
-			strings.TrimPrefix(ivResult, ivDelimiter)
-		}
+	// httpTransportSettings := &http.Transport{}
+
+	// if s.Timeout > 0 {
+	// 	httpTransportSettings.ResponseHeaderTimeout = time.Second * time.Duration(s.Timeout)
+	// }
+
+	logger := ctx.Logger()
+
+	// Set the proxy server to use, if supplied
+	// if len(s.Proxy) > 0 {
+	// 	proxyURL, err := url.Parse(s.Proxy)
+	// 	if err != nil {
+	// 		logger.Debugf("Error parsing proxy url '%s': %s", s.Proxy, err)
+	// 		return nil, err
+	// 	}
+
+	// 	logger.Debug("Setting proxy server:", s.Proxy)
+	// 	httpTransportSettings.Proxy = http.ProxyURL(proxyURL)
+	// }
+
+	// if strings.HasPrefix(s.Uri, "https") {
+
+	// 	cfg := &ssl.Config{}
+
+	// 	if len(s.SSLConfig) != 0 {
+	// 		err := cfg.FromMap(s.SSLConfig)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+
+	// 		if _, set := s.SSLConfig["skipVerify"]; !set {
+	// 			cfg.SkipVerify = true
+	// 		}
+	// 		if _, set := s.SSLConfig["useSystemCert"]; !set {
+	// 			cfg.UseSystemCert = true
+	// 		}
+	// 	} else {
+	// 		//using ssl but not configured, use defaults
+	// 		cfg.SkipVerify = true
+	// 		cfg.UseSystemCert = true
+	// 	}
+
+	// 	tlsConfig, err := ssl.NewClientTLSConfig(cfg)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+
+	// 	httpTransportSettings.TLSClientConfig = tlsConfig
+	// }
+
+	// client.Transport = httpTransportSettings
+	// act.client = client
+
+	return act, nil
+}
+
+// Activity is an activity that is used to invoke a REST Operation
+// settings : {method, uri, headers, proxy, skipSSL}
+// input    : {pathParams, queryParams, headers, content}
+// outputs  : {status, result}
+type Activity struct {
+	settings *Settings
+	// containsParam bool
+	// client        *http.Client
+}
+
+func (a *Activity) Metadata() *activity.Metadata {
+	return activityMd
+}
+
+// Eval implements api.Activity.Eval - Invokes a REST Operation
+func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
+
+	input := &Input{}
+	err = ctx.GetInputObject(input)
+	if err != nil {
+		return false, err
 	}
+	delimeter := a.settings.Delimeter
+	prefix := a.settings.Prefix
+	suffix := a.settings.Suffix
 
-	//	log.Debugf("Result is now: [%s]", ivResult)
+	// uri := a.settings.Uri
 
-	//	log.Debug("Processing suffix")
+	// if a.containsParam {
 
-	if ivSuffix != "" { // we have a suffix, should be added to result
-		if ivDelimiter != "" { // when we have a delimiter, check if suffix starts with it
-			if strings.HasPrefix(ivSuffix, ivDelimiter) { // already starts with delimiter, just add it
-				ivResult = ivResult + ivSuffix
-			} else {
-				// suffix does not start with dilimiter, add it as well
-				ivResult = ivResult + ivDelimiter + ivSuffix
-			}
-		} else { // there's no delimiter, just add the suffix
-			ivResult = ivResult + ivSuffix
-		}
+	// 	if len(input.PathParams) == 0 {
+	// 		err := activity.NewError("Path Params not specified, required for URI: "+uri, "", nil)
+	// 		return false, err
+	// 	}
+
+	// 	uri = BuildURI(a.settings.Uri, input.PathParams)
+	// }
+
+	// if len(input.QueryParams) > 0 {
+	// 	qp := url.Values{}
+
+	// 	for key, value := range input.QueryParams {
+	// 		qp.Set(key, value)
+	// 	}
+
+	// 	uri = uri + "?" + qp.Encode()
+	// }
+
+	logger := ctx.Logger()
+
+	// if logger.DebugEnabled() {
+	// 	logger.Debugf("REST Call: [%s] %s", a.settings.Method, uri)
+	// }
+
+	// var reqBody io.Reader
+
+	// contentType := "application/json; charset=UTF-8"
+	// method := a.settings.Method
+
+	// if method == methodPOST || method == methodPUT || method == methodPATCH {
+
+	// 	contentType = getContentType(input.Content)
+
+	// 	if input.Content != nil {
+	// 		if str, ok := input.Content.(string); ok {
+	// 			reqBody = bytes.NewBuffer([]byte(str))
+	// 		} else {
+	// 			b, _ := json.Marshal(input.Content) //todo handle error
+	// 			reqBody = bytes.NewBuffer([]byte(b))
+	// 		}
+	// 	}
+	// } else {
+	// 	reqBody = nil
+	// }
+
+	// req, err := http.NewRequest(method, uri, reqBody)
+	// if err != nil {
+	// 	return false, err
+	// }
+
+	// if reqBody != nil {
+	// 	req.Header.Set("Content-Type", contentType)
+	// }
+
+	// headers := a.getHeaders(input.Headers)
+
+	// // Set headers
+	// if len(headers) > 0 {
+	// 	if logger.DebugEnabled() {
+	// 		logger.Debug("Setting HTTP request headers...")
+	// 	}
+	// 	for key, value := range headers {
+	// 		if logger.TraceEnabled() {
+	// 			logger.Trace("%s: %s", key, value)
+	// 		}
+	// 		req.Header.Set(key, value)
+	// 	}
+	// }
+
+	// resp, err := a.client.Do(req)
+	// if err != nil {
+	// 	return false, err
+	// }
+
+	// if resp == nil {
+	// 	logger.Trace("Empty response")
+	// 	return true, nil
+	// }
+
+	// defer func() {
+	// 	if resp.Body != nil {
+	// 		_ = resp.Body.Close()
+	// 	}
+	// }()
+
+	// if logger.DebugEnabled() {
+	// 	logger.Debug("Response status:", resp.Status)
+	// }
+
+	// respHeaders := make(map[string]string, len(resp.Header))
+
+	// for key := range resp.Header {
+	// 	respHeaders[key] = resp.Header.Get(key)
+	// }
+
+	// var cookies []interface{}
+
+	// for _, cookie := range resp.Header["Set-Cookie"] {
+	// 	cookies = append(cookies, cookie)
+	// }
+
+	// var result interface{}
+
+	// // Check the HTTP Header Content-Type
+	// respContentType := resp.Header.Get("Content-Type")
+	// switch respContentType {
+	// case "application/json":
+	// 	d := json.NewDecoder(resp.Body)
+	// 	d.UseNumber()
+	// 	err = d.Decode(&result)
+	// 	if err != nil {
+	// 		switch {
+	// 		case err == io.EOF:
+	// 			// empty body
+	// 		default:
+	// 			return false, err
+	// 		}
+	// 	}
+	// default:
+	// 	b, err := ioutil.ReadAll(resp.Body)
+	// 	if err != nil {
+	// 		return false, err
+	// 	}
+
+	result = string("b")
+	// }
+
+	// if logger.TraceEnabled() {
+	// 	logger.Trace("Response body:", result)
+	// }
+
+	output := &Output{ResultString: result}
+
+	err = ctx.SetOutputObject(output)
+	if err != nil {
+		return false, err
 	}
-
-	//	log.Debugf("Result is now: [%s]. This is what we'll return.", ivResult)
-
-	context.SetOutput(result, ivResult)
 
 	return true, nil
 }
 
-func getInputParameter(context activity.Context, parameter string) string {
-	output, ok := context.GetInput(parameter).(string)
-	if !ok {
-		return ""
-	}
-	return output
-}
-func getInputArray(context activity.Context, parameter string) []string {
-	output, ok := context.GetInputObject(parameter)
-	if !ok {
-		a1 := []string{"a", "b"}
+////////////////////////////////////////////////////////////////////////////////////////
+// Utils
 
-		return a1
-	}
-	log.Debug(output)
-	a1 := []string{"a", "b"}
-	return a1
-}
+// func (a *Activity) getHeaders(inputHeaders map[string]string) map[string]string {
 
-func addPart(input string, part string, delimiter string) string {
-	if part == "" { // no part means no change to input
-		return input
-	}
-	if delimiter == "" || (delimiter != "" && input == "") { // no delimiter or first entry without having prefix, just add part to input
-		//	if delimiter == "" { // no delimiter, just add part to input
-		return input + part
-	}
-	// part and delimiter, add both to input
-	return input + delimiter + part
-}
+// 	if len(inputHeaders) == 0 {
+// 		return a.settings.Headers
+// 	}
+
+// 	if len(a.settings.Headers) == 0 {
+// 		return inputHeaders
+// 	}
+
+// 	headers := make(map[string]string)
+// 	for key, value := range a.settings.Headers {
+// 		headers[key] = value
+// 	}
+// 	for key, value := range inputHeaders {
+// 		headers[key] = value
+// 	}
+
+// 	return headers
+// }
+
+//todo just make contentType a setting
+// func getContentType(replyData interface{}) string {
+
+// 	contentType := "application/json; charset=UTF-8"
+
+// 	switch v := replyData.(type) {
+// 	case string:
+// 		if !strings.HasPrefix(v, "{") && !strings.HasPrefix(v, "[") {
+// 			contentType = "text/plain; charset=UTF-8"
+// 		}
+// 	case int, int64, float64, bool, json.Number:
+// 		contentType = "text/plain; charset=UTF-8"
+// 	default:
+// 		contentType = "application/json; charset=UTF-8"
+// 	}
+
+// 	return contentType
+// }
+
+// BuildURI is a temporary crude URI builder
+// func BuildURI(uri string, values map[string]string) string {
+
+// 	var buffer bytes.Buffer
+// 	buffer.Grow(len(uri))
+
+// 	addrStart := strings.Index(uri, "://")
+
+// 	i := addrStart + 3
+
+// 	for i < len(uri) {
+// 		if uri[i] == '/' {
+// 			break
+// 		}
+// 		i++
+// 	}
+
+// 	buffer.WriteString(uri[0:i])
+
+// 	for i < len(uri) {
+// 		if uri[i] == ':' {
+// 			j := i + 1
+// 			for j < len(uri) && uri[j] != '/' {
+// 				j++
+// 			}
+
+// 			if i+1 == j {
+
+// 				buffer.WriteByte(uri[i])
+// 				i++
+// 			} else {
+
+// 				param := uri[i+1 : j]
+// 				value := values[param]
+// 				buffer.WriteString(value)
+// 				if j < len(uri) {
+// 					buffer.WriteString("/")
+// 				}
+// 				i = j + 1
+// 			}
+
+// 		} else {
+// 			buffer.WriteByte(uri[i])
+// 			i++
+// 		}
+// 	}
+
+// 	return buffer.String()
+// }

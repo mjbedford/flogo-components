@@ -1,0 +1,39 @@
+{
+  "name": "array2string",
+  "type": "flogo:activity",
+  "version": "0.1.0",
+  "title": "Array 2 String",
+  "description": "Converts a string array to a string",
+  "homepage": "https://github.com/mjbedford/mb-flogo-components/activity/array2string",
+  "settings": [
+    {
+      "name": "delimeter",
+      "type": "string",
+      "description" : "The element delimeter"
+    },
+    {
+      "name": "prefix",
+      "type": "string",
+      "description" : "The record prefix"
+    },
+    {
+      "name": "suffix",
+      "type": "string",
+      "description" : "The record suffix"
+    }
+  ],
+  "input": [
+    {
+      "name": "inputarray",
+      "type": "array",
+      "description" : "The input array"
+    }
+  ],
+  "output": [
+    {
+      "name": "result",
+      "type": "string",
+      "description" : "The result string"
+    }
+  ]
+}
