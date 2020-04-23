@@ -1,0 +1,69 @@
+{
+  "name": "array2string",
+  "type": "flogo:activity",
+  "ref": "https://github.com/mjbedford/array2string",
+  "version": "0.0.1",
+  "title": "Array2String",
+  "description": "Combines array elements into a single string",
+  "author": "Martyn Bedford <mbedford@tibco.com>",
+  "homepage": "https://github.com/mjbedford/array2string",
+  "input":[
+    {
+      "name": "delimiter",
+      "type": "string"
+    },
+    {
+        "name": "source",
+        "type": "array",
+        "value": "{\"$schema\": \"http:\/\/json-schema.org\/draft-04\/schema#\", \"type\": \"object\",\"properties\":  {     \"ids\": { \"type\": \"array\", \"items\": { \"properties\": { \"id\": { \"type\": \"string\" } },    \"required\": [\"id\" ]}}}}"
+
+       
+    },
+    {
+      "name": "prefix",
+      "type": "string"
+    },
+    {
+      "name": "suffix",
+      "type": "string"
+    },
+    {
+      "name": "part1",
+      "type": "string"
+    },
+    {
+      "name": "part2",
+      "type": "string"
+    },
+    {
+      "name": "part3",
+      "type": "string"
+    },
+    {
+      "name": "part4",
+      "type": "string"
+    },
+    {
+      "name": "part5",
+      "type": "string"
+    },
+    {
+      "name": "part6",
+      "type": "string"
+    },
+    {
+      "name": "part7",
+      "type": "string"
+    },
+    {
+      "name": "part8",
+      "type": "string"
+    }
+  ],
+  "output": [
+    {
+      "name": "result",
+      "type": "string"
+    }
+  ]
+}
