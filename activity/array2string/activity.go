@@ -80,11 +80,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	*/
 	var ivResult = ""
 
-	//	log.Debug("Adding parts to result")
-	if source != "" {
+	log.Debug("Adding parts to result")
+	if source != nil {
 		// for _, i := range source.ids {
 		// 	ivResult = addPart(ivResult, i.id, ivDelimiter)
-
+		log.Debug("we have a source")
 		// }
 	}
 
