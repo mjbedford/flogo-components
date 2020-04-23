@@ -9,6 +9,13 @@
   "homepage": "https://github.com/mjbedford/mb-flogo-components/activity/array2string",
   "input":[
     {
+			"name": "source",
+			"type": "array",
+			"value": "{\"$schema\": \"http:\/\/json-schema.org\/draft-04\/schema#\", \"type\": \"object\",\"properties\":  {     \"ids\": { \"type\": \"array\", \"items\": { \"properties\": { \"id\": { \"type\": \"string\" } },    \"required\": [\"id\" ]}}}}"
+
+
+		},
+    {
       "name": "delimiter",
       "type": "string"
     },

@@ -9,18 +9,18 @@ import (
 
 const (
 	delimiter = "delimiter"
-	// source    = "source"
-	prefix = "prefix"
-	suffix = "suffix"
-	part1  = "part1"
-	part2  = "part2"
-	part3  = "part3"
-	part4  = "part4"
-	part5  = "part5"
-	part6  = "part6"
-	part7  = "part7"
-	part8  = "part8"
-	result = "result"
+	source    = "source"
+	prefix    = "prefix"
+	suffix    = "suffix"
+	part1     = "part1"
+	part2     = "part2"
+	part3     = "part3"
+	part4     = "part4"
+	part5     = "part5"
+	part6     = "part6"
+	part7     = "part7"
+	part8     = "part8"
+	result    = "result"
 )
 
 // log is the default package logger
@@ -46,7 +46,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	// do eval
 	ivDelimiter := getInputParameter(context, delimiter)
-	// source := getInputParameter(context, source)
+	source := getInputArray(context, source)
 	ivPrefix := getInputParameter(context, prefix)
 	ivSuffix := getInputParameter(context, suffix)
 	ivPart1 := getInputParameter(context, part1)
@@ -81,11 +81,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	var ivResult = ""
 
 	//	log.Debug("Adding parts to result")
+	if source != "" {
+		// for _, i := range source.ids {
+		// 	ivResult = addPart(ivResult, i.id, ivDelimiter)
 
-	// for _, i := range source.ids {
-	// 	ivResult = addPart(ivResult, i.id, ivDelimiter)
-
-	// }
+		// }
+	}
 
 	ivResult = addPart(ivResult, ivPart1, ivDelimiter)
 	ivResult = addPart(ivResult, ivPart2, ivDelimiter)
@@ -138,6 +139,14 @@ func getInputParameter(context activity.Context, parameter string) string {
 	output, ok := context.GetInput(parameter).(string)
 	if !ok {
 		return ""
+	}
+	return output
+}
+func getInputArray(contxt activity.Context, parameter string) []string {
+	output, ok := context.GetInput(parameter).(string)
+	if !ok {
+		a1 := [5]string{"English", "Japanese", "Spanish", "French", "Hindi"}
+		return a1
 	}
 	return output
 }
