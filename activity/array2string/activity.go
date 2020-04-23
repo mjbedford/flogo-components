@@ -142,13 +142,16 @@ func getInputParameter(context activity.Context, parameter string) string {
 	}
 	return output
 }
-func getInputArray(contxt activity.Context, parameter string) []string {
-	output, ok := context.GetInput(parameter).(string)
+func getInputArray(context activity.Context, parameter string) []string {
+	output, ok := context.GetInputObject(parameter)
 	if !ok {
-		a1 := [5]string{"English", "Japanese", "Spanish", "French", "Hindi"}
+		a1 := []string{"a", "b"}
+
 		return a1
 	}
-	return output
+	log.Debug(output)
+	a1 := []string{"a", "b"}
+	return a1
 }
 
 func addPart(input string, part string, delimiter string) string {
