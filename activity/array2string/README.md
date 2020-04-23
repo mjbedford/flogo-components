@@ -5,11 +5,11 @@ This activity provides your flogo application the ability to combine separate pa
 ## Installation
 
 ```bash
-flogo install https://github.com/mjbedford/array2string
+flogo install https://github.com/mjbedford/mb-flogo-components/tree/master/activity/array2string
 ```
 Link for flogo web:
 ```
-https://github.com/mjbedford/array2string
+github.com/mjbedford/mb-flogo-components/tree/master/activity/array2string
 
 ```
 
