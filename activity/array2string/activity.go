@@ -1,4 +1,4 @@
-package combine
+package array2string
 
 import (
 	"strings"
