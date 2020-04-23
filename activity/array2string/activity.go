@@ -9,18 +9,18 @@ import (
 
 const (
 	delimiter = "delimiter"
-	source    = "source"
-	prefix    = "prefix"
-	suffix    = "suffix"
-	part1     = "part1"
-	part2     = "part2"
-	part3     = "part3"
-	part4     = "part4"
-	part5     = "part5"
-	part6     = "part6"
-	part7     = "part7"
-	part8     = "part8"
-	result    = "result"
+	// source    = "source"
+	prefix = "prefix"
+	suffix = "suffix"
+	part1  = "part1"
+	part2  = "part2"
+	part3  = "part3"
+	part4  = "part4"
+	part5  = "part5"
+	part6  = "part6"
+	part7  = "part7"
+	part8  = "part8"
+	result = "result"
 )
 
 // log is the default package logger
@@ -68,6 +68,15 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		log.Debugf("part6: [%s]", ivPart6)
 		log.Debugf("part7: [%s]", ivPart7)
 		log.Debugf("part8: [%s]", ivPart8)
+
+			{
+			"name": "source",
+			"type": "array",
+			"value": "{\"$schema\": \"http:\/\/json-schema.org\/draft-04\/schema#\", \"type\": \"object\",\"properties\":  {     \"ids\": { \"type\": \"array\", \"items\": { \"properties\": { \"id\": { \"type\": \"string\" } },    \"required\": [\"id\" ]}}}}"
+
+
+		}
+		,
 	*/
 	var ivResult = ""
 

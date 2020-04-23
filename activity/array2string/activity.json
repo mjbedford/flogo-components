@@ -13,13 +13,6 @@
       "type": "string"
     },
     {
-        "name": "source",
-        "type": "array",
-        "value": "{\"$schema\": \"http:\/\/json-schema.org\/draft-04\/schema#\", \"type\": \"object\",\"properties\":  {     \"ids\": { \"type\": \"array\", \"items\": { \"properties\": { \"id\": { \"type\": \"string\" } },    \"required\": [\"id\" ]}}}}"
-
-       
-    },
-    {
       "name": "prefix",
       "type": "string"
     },
