@@ -4,6 +4,7 @@ import (
 	"github.com/project-flogo/core/data/coerce"
 )
 
+// Settings struct
 type Settings struct {
 	// Method        string                 `md:"method,required,allowed(GET,POST,PUT,PATCH,DELETE)"` // The HTTP method to invoke
 	Delimeter string `md:"delimeter"` // The delimeter
@@ -20,6 +21,7 @@ type Settings struct {
 	// SSLConfig     map[string]interface{} `md:"sslConfig"`                                          // SSL Configuration
 }
 
+// Input struct
 type Input struct {
 	// PathParams  map[string]string `md:"pathParams"`  // The query parameters (e.g., 'id' in http://.../pet?id=someValue )
 	// QueryParams map[string]string `md:"queryParams"` // The path parameters (e.g., 'id' in http://.../pet/:id/name )
@@ -28,16 +30,18 @@ type Input struct {
 	InputArray map[string]string `md:"inputarray"` // The Input Array
 }
 
+// ToMap Input
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"inputarray": i.InputArray,
 	}
 }
 
+// FromMap Input
 func (i *Input) FromMap(values map[string]interface{}) error {
 
 	var err error
-	
+
 	i.InputArray, err = coerce.ToArray(values["inputarray"])
 	if err != nil {
 		return err
@@ -45,27 +49,27 @@ func (i *Input) FromMap(values map[string]interface{}) error {
 	return nil
 }
 
+// Output struct
 type Output struct {
 	// Status  int               `md:"status"`  // The HTTP status code
 	// Data    interface{}       `md:"data"`    // The HTTP response data
 	// Headers map[string]string `md:"headers"` // The HTTP response headers
 	// Cookies      []interface{} `md:"cookies"`      // The response cookies (from 'Set-Cookie')
-	ResultString string        `md:"resultstring"` // the Output Result String
+	ResultString string `md:"resultstring"` // the Output Result String
 }
 
+// ToMap Output
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"resultstring": o.ResultString
+		"resultstring": o.ResultString,
 	}
 }
 
-
-
-
+// FromMap Output
 func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
-	o.Result, err = values["result"]
+	o.ResultString, err = values["resultstring"]
 	if err != nil {
 		return err
 	}

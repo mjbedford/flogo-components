@@ -17,6 +17,7 @@ const (
 
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
+// New activity
 func New(ctx activity.InitContext) (activity.Activity, error) {
 	s := &Settings{}
 	err := metadata.MapToStruct(ctx.Settings(), s, true)
@@ -95,6 +96,7 @@ type Activity struct {
 	// client        *http.Client
 }
 
+// Metadata Activity
 func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
@@ -135,9 +137,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	logger := ctx.Logger()
 
-	// if logger.DebugEnabled() {
-	// 	logger.Debugf("REST Call: [%s] %s", a.settings.Method, uri)
-	// }
+	if logger.DebugEnabled() {
+		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, delimeter)
+		logger.Debugf("Eval called: [%s] %s", a.settings.Prefix, prefix)
+		logger.Debugf("Eval called: [%s] %s", a.settings.Suffix, suffix)
+	}
 
 	// var reqBody io.Reader
 
