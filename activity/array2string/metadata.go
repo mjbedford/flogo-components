@@ -58,8 +58,6 @@ func (i *Input) FromMap(values map[string]interface{}) error {
 	return nil
 }
 
-
-
 // ToMap Output
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
@@ -71,8 +69,8 @@ func (o *Output) ToMap() map[string]interface{} {
 func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
-	o.ResultString , err := coerce.ToString(values["resultstring"])
-	//o.ResultString = string(values["resultstring"])
+	// o.ResultString , err := coerce.ToString(values["resultstring"])
+	o.ResultString  , err := coerce.ToString(values["resultstring"]) //= string(values["resultstring"])
 	if err != nil {
 		return err
 	}
