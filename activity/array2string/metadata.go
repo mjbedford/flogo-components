@@ -30,6 +30,15 @@ type Input struct {
 	InputArray map[string]string `md:"inputarray"` // The Input Array
 }
 
+// Output struct
+type Output struct {
+	// Status  int               `md:"status"`  // The HTTP status code
+	// Data    interface{}       `md:"data"`    // The HTTP response data
+	// Headers map[string]string `md:"headers"` // The HTTP response headers
+	// Cookies      []interface{} `md:"cookies"`      // The response cookies (from 'Set-Cookie')
+	ResultString string `md:"resultstring"` // the Output Result String
+}
+
 // ToMap Input
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
@@ -49,14 +58,7 @@ func (i *Input) FromMap(values map[string]interface{}) error {
 	return nil
 }
 
-// Output struct
-type Output struct {
-	// Status  int               `md:"status"`  // The HTTP status code
-	// Data    interface{}       `md:"data"`    // The HTTP response data
-	// Headers map[string]string `md:"headers"` // The HTTP response headers
-	// Cookies      []interface{} `md:"cookies"`      // The response cookies (from 'Set-Cookie')
-	ResultString string `md:"resultstring"` // the Output Result String
-}
+
 
 // ToMap Output
 func (o *Output) ToMap() map[string]interface{} {
@@ -69,7 +71,8 @@ func (o *Output) ToMap() map[string]interface{} {
 func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
-	o.ResultString, err = values["resultstring"]
+	o.ResultString , err := coerce.ToString(values["resultstring"])
+	//o.ResultString = string(values["resultstring"])
 	if err != nil {
 		return err
 	}

@@ -220,7 +220,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 	cookies = append(cookies, cookie)
 	// }
 
-	// var result interface{}
+	var result interface{}
 
 	// // Check the HTTP Header Content-Type
 	// respContentType := resp.Header.Get("Content-Type")
