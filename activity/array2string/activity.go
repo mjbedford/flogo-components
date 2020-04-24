@@ -75,7 +75,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		// qp.Set(key, value)
 		nval, err := coerce.ToString(value)
 		if err != nil {
-			return err
+			return false, err
 		}
 		result = result + nval
 	}
