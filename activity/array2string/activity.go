@@ -2,6 +2,7 @@ package array2string
 
 import (
 	"github.com/project-flogo/core/activity"
+	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 )
 
@@ -72,7 +73,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
-		result = result + value
+		nval, err := coerce.ToString(value)
+		if err != nil {
+			return err
+		}
+		result = result + nval
 	}
 
 	// result = "Result !"
