@@ -70,7 +70,7 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 
 	var err error
 	// o.ResultString , err := coerce.ToString(values["resultstring"])
-	o.ResultString  , err := coerce.ToString(values["resultstring"]) //= string(values["resultstring"])
+	o.ResultString, err := coerce.ToString(values["resultstring"]) //= string(values["resultstring"])
 	if err != nil {
 		return err
 	}
