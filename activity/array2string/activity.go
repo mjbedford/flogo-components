@@ -71,7 +71,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	var result string
 
-	if prefix != nil {
+	if prefix != "" {
 		result = prefix
 	}
 
@@ -84,7 +84,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		}
 		result = result + delimeter + nval
 	}
-	if suffix != nil {
+	if suffix != "" {
 		result = result + suffix
 	}
 	// result = "Result !"
