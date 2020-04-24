@@ -2,7 +2,6 @@ package array2string
 
 import (
 	"github.com/project-flogo/core/activity"
-	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 )
 
@@ -251,7 +250,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 	logger.Trace("Response body:", result)
 	// }
 
-	output := &Output{ResultString: coerce.ToString(result)}
+	output := &Output{ResultString: result} //coerce.ToString(result)}
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
