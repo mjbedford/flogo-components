@@ -78,7 +78,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
 		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, key)
-		nval, err := coerce.ToString(value)
+		nval, err := coerce.ToString(value.query)
 		if err != nil {
 			return false, err
 		}
