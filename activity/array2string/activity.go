@@ -221,7 +221,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 	cookies = append(cookies, cookie)
 	// }
 
-	var result interface{}
+	var result string
 
 	// // Check the HTTP Header Content-Type
 	// respContentType := resp.Header.Get("Content-Type")
@@ -244,7 +244,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// 		return false, err
 	// 	}
 
-	result = string("b")
+	result = "Result !"
 	// }
 
 	// if logger.TraceEnabled() {
