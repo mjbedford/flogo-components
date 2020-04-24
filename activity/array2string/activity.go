@@ -36,7 +36,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	// 	httpTransportSettings.ResponseHeaderTimeout = time.Second * time.Duration(s.Timeout)
 	// }
 
-	logger := ctx.Logger()
+	// logger := ctx.Logger()
 
 	// Set the proxy server to use, if supplied
 	// if len(s.Proxy) > 0 {
