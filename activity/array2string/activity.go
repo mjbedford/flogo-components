@@ -77,7 +77,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if prefix != "" {
 		result = prefix
 	}
-
+	mt := reflect.TypeOf(input.InputArray)
+	fmt.Println(strings.Repeat("\t", 1), "Input Type is", mt.Name(), "and kind is", mt.Kind())
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
 		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, key)
