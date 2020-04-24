@@ -27,7 +27,8 @@ type Input struct {
 	// QueryParams map[string]string `md:"queryParams"` // The path parameters (e.g., 'id' in http://.../pet/:id/name )
 	// Headers     map[string]string `md:"headers"`     // The HTTP header parameters
 	// Content     interface{}       `md:"content"`     // The message content to send. This is only used in POST, PUT, and PATCH
-	InputArray map[string]string `md:"inputarray"` // The Input Array
+	// InputArray map[string]string `md:"inputarray"` // The Input Array []interface{}
+	InputArray []interface{} `md:"inputarray"` // The Input Array
 }
 
 // Output struct
