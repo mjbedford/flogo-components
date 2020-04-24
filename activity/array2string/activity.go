@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/project-flogo/core/activity"
-	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 )
 
@@ -85,14 +84,16 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		varType := reflect.TypeOf(value)
 		t := reflect.TypeOf(varType)
 		fmt.Println(strings.Repeat("\t", 1), "Type is", t.Name(), "and kind is", t.Kind())
-		var r string
-		r = "Name : " + string(t.Name()) + " and kind is " + string(t.Kind())
-		result = result + r
-		nval, err := coerce.ToString(value)
-		if err != nil {
-			return false, err
-		}
-		result = result + delimeter + nval
+		var n, k string
+		n = t.Name()
+		k = t.Kind().String()
+
+		result = result + n + k
+		// nval, err := coerce.ToString(value)
+		// if err != nil {
+		// 	return false, err
+		// }
+		result = result //+ delimeter + nval
 	}
 	if suffix != "" {
 		result = result + suffix
