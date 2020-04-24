@@ -71,6 +71,10 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	var result string
 
+	if prefix != nil {
+		result = prefix
+	}
+
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
 		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, key)
@@ -78,9 +82,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		if err != nil {
 			return false, err
 		}
-		result = result + nval
+		result = result + delimeter + nval
 	}
-
+	if suffix != nil {
+		result = result + suffix
+	}
 	// result = "Result !"
 	// }
 
