@@ -31,7 +31,7 @@
   ],
   "output": [
     {
-      "name": "result",
+      "name": "resultstring",
       "type": "string",
       "description" : "The result string"
     }
