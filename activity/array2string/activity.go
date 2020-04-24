@@ -79,7 +79,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 	mt := reflect.TypeOf(input.InputArray)
 	fmt.Println(strings.Repeat("\t", 1), "Input Type is", mt.Name(), "and kind is", mt.Kind())
-	fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
+	// fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
+	n := mt.NumField()
+	for i := 0; i < n; i++ {
+		tt := mt.Field(i)
+		fmt.Printf("Field %v: name: %v, type: %v\n", i, tt.Name, tt.Type)
+	}
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
 		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, key)
