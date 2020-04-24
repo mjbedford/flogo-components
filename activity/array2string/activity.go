@@ -26,62 +26,6 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	}
 
 	act := &Activity{settings: s}
-	// act.containsParam = strings.Index(s.Uri, "/:") > -1
-
-	// client := &http.Client{}
-
-	// httpTransportSettings := &http.Transport{}
-
-	// if s.Timeout > 0 {
-	// 	httpTransportSettings.ResponseHeaderTimeout = time.Second * time.Duration(s.Timeout)
-	// }
-
-	// logger := ctx.Logger()
-
-	// Set the proxy server to use, if supplied
-	// if len(s.Proxy) > 0 {
-	// 	proxyURL, err := url.Parse(s.Proxy)
-	// 	if err != nil {
-	// 		logger.Debugf("Error parsing proxy url '%s': %s", s.Proxy, err)
-	// 		return nil, err
-	// 	}
-
-	// 	logger.Debug("Setting proxy server:", s.Proxy)
-	// 	httpTransportSettings.Proxy = http.ProxyURL(proxyURL)
-	// }
-
-	// if strings.HasPrefix(s.Uri, "https") {
-
-	// 	cfg := &ssl.Config{}
-
-	// 	if len(s.SSLConfig) != 0 {
-	// 		err := cfg.FromMap(s.SSLConfig)
-	// 		if err != nil {
-	// 			return nil, err
-	// 		}
-
-	// 		if _, set := s.SSLConfig["skipVerify"]; !set {
-	// 			cfg.SkipVerify = true
-	// 		}
-	// 		if _, set := s.SSLConfig["useSystemCert"]; !set {
-	// 			cfg.UseSystemCert = true
-	// 		}
-	// 	} else {
-	// 		//using ssl but not configured, use defaults
-	// 		cfg.SkipVerify = true
-	// 		cfg.UseSystemCert = true
-	// 	}
-
-	// 	tlsConfig, err := ssl.NewClientTLSConfig(cfg)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-
-	// 	httpTransportSettings.TLSClientConfig = tlsConfig
-	// }
-
-	// client.Transport = httpTransportSettings
-	// act.client = client
 
 	return act, nil
 }
@@ -113,25 +57,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	prefix := a.settings.Prefix
 	suffix := a.settings.Suffix
 
-	// uri := a.settings.Uri
-
-	// if a.containsParam {
-
-	// 	if len(input.PathParams) == 0 {
-	// 		err := activity.NewError("Path Params not specified, required for URI: "+uri, "", nil)
-	// 		return false, err
-	// 	}
-
-	// 	uri = BuildURI(a.settings.Uri, input.PathParams)
-	// }
-
-	// if len(input.QueryParams) > 0 {
-	// 	qp := url.Values{}
-
-	// 	for key, value := range input.QueryParams {
-	// 		qp.Set(key, value)
-	// 	}
-
 	// 	uri = uri + "?" + qp.Encode()
 	// }
 
@@ -143,107 +68,14 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		logger.Debugf("Eval called: [%s] %s", a.settings.Suffix, suffix)
 	}
 
-	// var reqBody io.Reader
-
-	// contentType := "application/json; charset=UTF-8"
-	// method := a.settings.Method
-
-	// if method == methodPOST || method == methodPUT || method == methodPATCH {
-
-	// 	contentType = getContentType(input.Content)
-
-	// 	if input.Content != nil {
-	// 		if str, ok := input.Content.(string); ok {
-	// 			reqBody = bytes.NewBuffer([]byte(str))
-	// 		} else {
-	// 			b, _ := json.Marshal(input.Content) //todo handle error
-	// 			reqBody = bytes.NewBuffer([]byte(b))
-	// 		}
-	// 	}
-	// } else {
-	// 	reqBody = nil
-	// }
-
-	// req, err := http.NewRequest(method, uri, reqBody)
-	// if err != nil {
-	// 	return false, err
-	// }
-
-	// if reqBody != nil {
-	// 	req.Header.Set("Content-Type", contentType)
-	// }
-
-	// headers := a.getHeaders(input.Headers)
-
-	// // Set headers
-	// if len(headers) > 0 {
-	// 	if logger.DebugEnabled() {
-	// 		logger.Debug("Setting HTTP request headers...")
-	// 	}
-	// 	for key, value := range headers {
-	// 		if logger.TraceEnabled() {
-	// 			logger.Trace("%s: %s", key, value)
-	// 		}
-	// 		req.Header.Set(key, value)
-	// 	}
-	// }
-
-	// resp, err := a.client.Do(req)
-	// if err != nil {
-	// 	return false, err
-	// }
-
-	// if resp == nil {
-	// 	logger.Trace("Empty response")
-	// 	return true, nil
-	// }
-
-	// defer func() {
-	// 	if resp.Body != nil {
-	// 		_ = resp.Body.Close()
-	// 	}
-	// }()
-
-	// if logger.DebugEnabled() {
-	// 	logger.Debug("Response status:", resp.Status)
-	// }
-
-	// respHeaders := make(map[string]string, len(resp.Header))
-
-	// for key := range resp.Header {
-	// 	respHeaders[key] = resp.Header.Get(key)
-	// }
-
-	// var cookies []interface{}
-
-	// for _, cookie := range resp.Header["Set-Cookie"] {
-	// 	cookies = append(cookies, cookie)
-	// }
-
 	var result string
 
-	// // Check the HTTP Header Content-Type
-	// respContentType := resp.Header.Get("Content-Type")
-	// switch respContentType {
-	// case "application/json":
-	// 	d := json.NewDecoder(resp.Body)
-	// 	d.UseNumber()
-	// 	err = d.Decode(&result)
-	// 	if err != nil {
-	// 		switch {
-	// 		case err == io.EOF:
-	// 			// empty body
-	// 		default:
-	// 			return false, err
-	// 		}
-	// 	}
-	// default:
-	// 	b, err := ioutil.ReadAll(resp.Body)
-	// 	if err != nil {
-	// 		return false, err
-	// 	}
+	for key, value := range input.InputArray {
+		// qp.Set(key, value)
+		result = result + value
+	}
 
-	result = "Result !"
+	// result = "Result !"
 	// }
 
 	// if logger.TraceEnabled() {
