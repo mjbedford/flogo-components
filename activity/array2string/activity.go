@@ -87,6 +87,18 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		st := reflect.TypeOf(s.Index(i))
 		fmt.Println(st)
 		fmt.Println(s.Index(i))
+		if s.Index(i) == reflect.Slice {
+			for i := 0; i < s.Index(i).Len(); i++ {
+				item := s.Index(i)
+				if item.Kind() == reflect.Struct {
+					v := reflect.Indirect(item)
+					for j := 0; j < v.NumField(); j++ {
+						fmt.Println(v.Type().Field(j).Name, v.Field(j).Interface())
+					}
+				}
+			}
+		}
+
 	}
 	// n := mt.NumField()
 	// for i := 0; i < n; i++ {
