@@ -84,6 +84,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	for i := 0; i < s.Len(); i++ {
 		fmt.Println("slice value")
+		st := reflect.TypeOf(s.Index(i))
+		fmt.Println(st)
 		fmt.Println(s.Index(i))
 	}
 	// n := mt.NumField()
