@@ -152,6 +152,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		}
 		fmt.Println(key)
 		fmt.Println(query.Query)
+		if key == 0 {
+			result = result + query.Query
+		} else {
+			result = result + delimeter + query.Query
+		}
 		result = result + delimeter + query.Query
 	}
 	if suffix != "" {
