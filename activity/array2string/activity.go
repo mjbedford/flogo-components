@@ -82,25 +82,25 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
 	s := reflect.ValueOf(input.InputArray)
 
-	for i := 0; i < s.Len(); i++ {
-		fmt.Println("slice value")
-		st := reflect.TypeOf(s.Index(i))
-		sk := reflect.Kind(s.Index(i))
-		fmt.Println(st)
-		fmt.Println(s.Index(i))
-		if sk == reflect.Slice {
-			for f := 0; f < s.Index(i).Len(); i++ {
-				item := s.Index(f)
-				if item.Kind() == reflect.Struct {
-					v := reflect.Indirect(item)
-					for j := 0; j < v.NumField(); j++ {
-						fmt.Println(v.Type().Field(j).Name, v.Field(j).Interface())
-					}
-				} else {
-					fmt.Println("Doh !! ")
-				}
-			}
-		}
+	// for i := 0; i < s.Len(); i++ {
+	// 	fmt.Println("slice value")
+	// 	st := reflect.TypeOf(s.Index(i))
+	// 	sk := reflect.Kind(s.Index(i))
+	// 	fmt.Println(st)
+	// 	fmt.Println(s.Index(i))
+	// 	if sk == reflect.Slice {
+	// 		for f := 0; f < s.Index(i).Len(); i++ {
+	// 			item := s.Index(f)
+	// 			if item.Kind() == reflect.Struct {
+	// 				v := reflect.Indirect(item)
+	// 				for j := 0; j < v.NumField(); j++ {
+	// 					fmt.Println(v.Type().Field(j).Name, v.Field(j).Interface())
+	// 				}
+	// 			} else {
+	// 				fmt.Println("Doh !! ")
+	// 			}
+	// 		}
+	// 	}
 
 	}
 	// n := mt.NumField()
