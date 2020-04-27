@@ -79,7 +79,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 	mt := reflect.TypeOf(input.InputArray)
 	fmt.Println(strings.Repeat("\t", 1), "Input Type is", mt.Name(), "and kind is", mt.Kind())
-	// fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
+	fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
+	fmt.Println(strings.Repeat("\t", 3), "Input Type is", mt.Name(), "and kind is", mt.Kind())
 	// s := reflect.ValueOf(input.InputArray)
 
 	// for i := 0; i < s.Len(); i++ {
