@@ -151,7 +151,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 		}
 		fmt.Println(query.Query)
-		result = result + delimeter + nval
+		result = result + delimeter + query.Query
 	}
 	if suffix != "" {
 		result = result + suffix
