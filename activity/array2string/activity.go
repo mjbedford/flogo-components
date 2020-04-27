@@ -82,7 +82,18 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
 	fmt.Println(strings.Repeat("\t", 3), "Input Type is", mt.Name(), "and kind is", mt.Kind())
 	// s := reflect.ValueOf(input.InputArray)
-
+	items := reflect.ValueOf(input.InputArray)
+	if items.Kind() == reflect.Slice {
+		for i := 0; i < items.Len(); i++ {
+			item := items.Index(i)
+			if item.Kind() == reflect.Struct {
+				v := reflect.Indirect(item)
+				for j := 0; j < v.NumField(); j++ {
+					fmt.Println(v.Type().Field(j).Name, v.Field(j).Interface())
+				}
+			}
+		}
+	}
 	// for i := 0; i < s.Len(); i++ {
 	// 	fmt.Println("slice value")
 	// 	st := reflect.TypeOf(s.Index(i))
