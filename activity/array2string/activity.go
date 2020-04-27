@@ -1,6 +1,7 @@
 package array2string
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strings"
@@ -19,6 +20,11 @@ const (
 	methodPUT   = "PUT"
 	methodPATCH = "PATCH"
 )
+
+// Q query struct
+type Q struct {
+	Query string `json:"query"`
+}
 
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
@@ -133,6 +139,17 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		if err != nil {
 			return false, err
 		}
+		var shot Q
+		if err := json.Unmarshal(nval, &shot); err != nil {
+			//log.Println("----------------------------------------------------")
+			//
+			fmt.Println(err)
+			//log.Println(string(mesg))
+			// shot.Query
+			//log.Println("----------------------------------------------------")
+
+		}
+		fmt.Println(shot.Query)
 		result = result + delimeter + nval
 	}
 	if suffix != "" {
