@@ -124,11 +124,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		varType := reflect.TypeOf(value)
 		t := reflect.TypeOf(varType)
 		fmt.Println(strings.Repeat("\t", 1), "Type is", t.Name(), "and kind is", t.Kind())
-		var n, k string
-		n = t.Name()
-		k = t.Kind().String()
+		// var n, k string
+		// n = t.Name()
+		// k = t.Kind().String()
 
-		result = result + n + k
+		// result = result + n + k
 		nval, err := coerce.ToString(value)
 		if err != nil {
 			return false, err
