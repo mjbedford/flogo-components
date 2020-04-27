@@ -150,6 +150,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 			//log.Println("----------------------------------------------------")
 
 		}
+		fmt.Println("hello")
 		fmt.Println(query.Query)
 		result = result + delimeter + query.Query
 	}
