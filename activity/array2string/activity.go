@@ -88,21 +88,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 			item := items.Index(i)
 			itemT := reflect.TypeOf(item)
 			fmt.Println(strings.Repeat("\t", 1), "Input Type is", itemT.Name(), "and kind is", itemT.Kind())
-			iter := reflect.ValueOf(item).MapRange()
 
-			for iter.Next() {
-
-				k := iter.Key()
-
-				v := iter.Value()
-				fmt.Println(k)
-				fmt.Println(v)
-			}
-			// if item.Kind() == reflect.Struct {
-
-			// } else {
-			// 	fmt.Println("Dohh !!!")
-			// }
 		}
 	}
 	// for i := 0; i < s.Len(); i++ {
