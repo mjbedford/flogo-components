@@ -84,46 +84,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if prefix != "" {
 		result = prefix
 	}
-	// mt := reflect.TypeOf(input.InputArray)
-	// fmt.Println(strings.Repeat("\t", 1), "Input Type is", mt.Name(), "and kind is", mt.Kind())
-	// fmt.Println(strings.Repeat("\t", 2), "Input Type is", mt.Name(), "and kind is", mt.Kind())
-	// fmt.Println(strings.Repeat("\t", 3), "Input Type is", mt.Name(), "and kind is", mt.Kind())
-	// s := reflect.ValueOf(input.InputArray)
-	// items := reflect.ValueOf(input.InputArray)
-	// if items.Kind() == reflect.Slice {
-	// 	for i := 0; i < items.Len(); i++ {
-	// 		item := items.Index(i)
-	// 		itemT := reflect.TypeOf(item)
-	// 		fmt.Println(strings.Repeat("\t", 1), "Input Type is", itemT.Name(), "and kind is", itemT.Kind())
 
-	// 	}
-	// }
-	// for i := 0; i < s.Len(); i++ {
-	// 	fmt.Println("slice value")
-	// 	st := reflect.TypeOf(s.Index(i))
-	// 	sk := reflect.Kind(s.Index(i))
-	// 	fmt.Println(st)
-	// 	fmt.Println(s.Index(i))
-	// 	if sk == reflect.Slice {
-	// 		for f := 0; f < s.Index(i).Len(); i++ {
-	// 			item := s.Index(f)
-	// 			if item.Kind() == reflect.Struct {
-	// 				v := reflect.Indirect(item)
-	// 				for j := 0; j < v.NumField(); j++ {
-	// 					fmt.Println(v.Type().Field(j).Name, v.Field(j).Interface())
-	// 				}
-	// 			} else {
-	// 				fmt.Println("Doh !! ")
-	// 			}
-	// 		}
-	// 	}
-
-	// }
-	// n := mt.NumField()
-	// for i := 0; i < n; i++ {
-	// 	tt := mt.Field(i)
-	// 	fmt.Printf("Field %v: name: %v, type: %v\n", i, tt.Name, tt.Type)
-	// }
 	for key, value := range input.InputArray {
 		// qp.Set(key, value)
 		logger.Debugf("Eval called: [%s] %s", a.settings.Delimeter, key)
@@ -157,17 +118,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		} else {
 			result = result + delimeter + query.Query
 		}
-		result = result + delimeter + query.Query
+
 	}
 	if suffix != "" {
 		result = result + suffix
 	}
-	// result = "Result !"
-	// }
 
-	// if logger.TraceEnabled() {
-	// 	logger.Trace("Response body:", result)
-	// }
 
 	output := &Output{ResultString: result} //coerce.ToString(result)}
 
@@ -178,96 +134,3 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	return true, nil
 }
-
-////////////////////////////////////////////////////////////////////////////////////////
-// Utils
-
-// func (a *Activity) getHeaders(inputHeaders map[string]string) map[string]string {
-
-// 	if len(inputHeaders) == 0 {
-// 		return a.settings.Headers
-// 	}
-
-// 	if len(a.settings.Headers) == 0 {
-// 		return inputHeaders
-// 	}
-
-// 	headers := make(map[string]string)
-// 	for key, value := range a.settings.Headers {
-// 		headers[key] = value
-// 	}
-// 	for key, value := range inputHeaders {
-// 		headers[key] = value
-// 	}
-
-// 	return headers
-// }
-
-//todo just make contentType a setting
-// func getContentType(replyData interface{}) string {
-
-// 	contentType := "application/json; charset=UTF-8"
-
-// 	switch v := replyData.(type) {
-// 	case string:
-// 		if !strings.HasPrefix(v, "{") && !strings.HasPrefix(v, "[") {
-// 			contentType = "text/plain; charset=UTF-8"
-// 		}
-// 	case int, int64, float64, bool, json.Number:
-// 		contentType = "text/plain; charset=UTF-8"
-// 	default:
-// 		contentType = "application/json; charset=UTF-8"
-// 	}
-
-// 	return contentType
-// }
-
-// BuildURI is a temporary crude URI builder
-// func BuildURI(uri string, values map[string]string) string {
-
-// 	var buffer bytes.Buffer
-// 	buffer.Grow(len(uri))
-
-// 	addrStart := strings.Index(uri, "://")
-
-// 	i := addrStart + 3
-
-// 	for i < len(uri) {
-// 		if uri[i] == '/' {
-// 			break
-// 		}
-// 		i++
-// 	}
-
-// 	buffer.WriteString(uri[0:i])
-
-// 	for i < len(uri) {
-// 		if uri[i] == ':' {
-// 			j := i + 1
-// 			for j < len(uri) && uri[j] != '/' {
-// 				j++
-// 			}
-
-// 			if i+1 == j {
-
-// 				buffer.WriteByte(uri[i])
-// 				i++
-// 			} else {
-
-// 				param := uri[i+1 : j]
-// 				value := values[param]
-// 				buffer.WriteString(value)
-// 				if j < len(uri) {
-// 					buffer.WriteString("/")
-// 				}
-// 				i = j + 1
-// 			}
-
-// 		} else {
-// 			buffer.WriteByte(uri[i])
-// 			i++
-// 		}
-// 	}
-
-// 	return buffer.String()
-// }
